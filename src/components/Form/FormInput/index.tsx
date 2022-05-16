@@ -8,6 +8,7 @@ import {
   InputLabel,
   Slider,
   StyledInput,
+  StyledTextArea,
   Toggle,
   ToggleContainer,
   TooltipContainer,
@@ -43,6 +44,7 @@ const FormInput: React.FC<IFormInputProps> = ({
   ...rest
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const areaRef = useRef<HTMLTextAreaElement>(null);
   const { fieldName, registerField, error } = useField(name);
 
   const getInitialValue = () => {
@@ -63,11 +65,19 @@ const FormInput: React.FC<IFormInputProps> = ({
   const [value, setValue] = useState(getInitialValue());
 
   useEffect(() => {
-    registerField({
-      name: fieldName,
-      ref: inputRef.current,
-      path: 'value',
-    });
+    if (type !== 'textarea') {
+      registerField({
+        name: fieldName,
+        ref: inputRef.current,
+        path: 'value',
+      });
+    } else {
+      registerField({
+        name: fieldName,
+        ref: areaRef.current,
+        path: 'value',
+      });
+    }
   }, [fieldName, registerField]);
 
   const inputProps = {
@@ -112,6 +122,24 @@ const FormInput: React.FC<IFormInputProps> = ({
   type === 'number' && (inputProps['step'] = '1');
   type === 'number' && (inputProps['onWheel'] = preventScroll);
 
+  const handleKey = (e: any) => {
+    if (e.key === 'Tab' && type === 'textarea') {
+      e.preventDefault();
+      if (areaRef.current) {
+        const start = e.target.selectionStart;
+        const end = e.target.selectionEnd;
+
+        areaRef.current.value =
+          areaRef.current.value.substring(0, start) +
+          '\t' +
+          areaRef.current.value.substring(end);
+
+        areaRef.current!.selectionStart = start + 1;
+        areaRef.current!.selectionEnd = end + 1;
+      }
+    }
+  };
+
   return (
     <Container {...containerProps}>
       <InputLabel>
@@ -146,7 +174,13 @@ const FormInput: React.FC<IFormInputProps> = ({
           {error && <span>{description}</span>}
         </>
       )}
-      {type !== 'checkbox' && type !== 'dropdown' && (
+      {type === 'textarea' && (
+        <>
+          <StyledTextArea ref={areaRef} onKeyDown={handleKey} />
+          {error && <span>{description}</span>}
+        </>
+      )}
+      {type !== 'checkbox' && type !== 'dropdown' && type !== 'textarea' && (
         <>
           <StyledInput {...inputProps} />
           {error && <span>{description}</span>}

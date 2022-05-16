@@ -284,7 +284,7 @@ const SellOrderModal: React.FC<ISellOrderModalProps> = ({
   };
 
   return (
-    <Container onClick={handleClose}>
+    <Container onMouseDown={handleClose}>
       {submitLoading && <Loading />}
       {open && (
         <ConfirmModal
@@ -295,7 +295,7 @@ const SellOrderModal: React.FC<ISellOrderModalProps> = ({
           singleButton
         />
       )}
-      <Content onClick={e => e.stopPropagation()}>
+      <Content onMouseDown={e => e.stopPropagation()}>
         <h1>#{item.assetID}</h1>
         <DetailsRow>
           {'Expiration date: ' + new Date(item.endTime * 1000).toLocaleString()}
