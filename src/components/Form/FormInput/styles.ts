@@ -8,17 +8,19 @@ interface IProps {
   valid?: boolean;
   span?: number;
   toggle?: boolean;
+  type?: string;
 }
 
-export const StyledInput = styled.input<IProps>`
+const defaultStyles = css`
   width: 100%;
-  height: 3rem;
 
   padding: 0.5rem 1rem;
   border: 1px solid ${({ theme }) => theme.input.border.dark};
   border-radius: 0.5rem;
 
   color: ${({ theme }) => theme.input.border.dark};
+
+  background-color: transparent;
 
   box-shadow: unset;
 
@@ -32,6 +34,12 @@ export const StyledInput = styled.input<IProps>`
     border: 1px solid ${({ theme }) => theme.input.border};
     box-shadow: 0 0 0.5rem -0.125rem ${props => lighten(0.1, props.theme.primary)};
   }
+`;
+
+export const StyledInput = styled.input<IProps>`
+  height: 3rem;
+
+  ${defaultStyles}
 
   /* Set valid css */
   ${({ theme, valid }) =>
@@ -60,7 +68,6 @@ export const StyledInput = styled.input<IProps>`
         `
       : null}
 
-
   /* Remove view password icon */
   /* Microsoft Edge */
   &::-ms-reveal {
@@ -87,6 +94,16 @@ export const StyledInput = styled.input<IProps>`
     -moz-appearance: textfield;
   }
 `;
+
+export const StyledTextArea = styled.textarea<IProps>`
+  ${defaultStyles}
+
+  min-width: 100%;
+  max-width: 100%;
+
+  min-height: 20rem;
+`;
+
 export const Container = styled.div<IProps>`
   width: 100%;
   position: relative;
@@ -101,6 +118,12 @@ export const Container = styled.div<IProps>`
     font-weight: 400;
     font-size: 0.85rem;
   }
+
+  ${props =>
+    props.type === 'textarea' &&
+    css`
+      height: auto;
+    `}
 `;
 
 export const ToggleContainer = styled.div<IProps>`

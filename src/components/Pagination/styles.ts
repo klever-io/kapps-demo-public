@@ -52,7 +52,7 @@ export const ItemContainer = styled.div<{ active: boolean }>`
 
   border-radius: 50%;
 
-  color: ${props => (props.active ? props.theme.white : props.theme.black)};
+  color: ${props => props.theme.white};
 
   cursor: pointer;
 

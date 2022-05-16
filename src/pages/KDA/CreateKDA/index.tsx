@@ -65,6 +65,7 @@ const CreateKDA = () => {
     if (type === 'NFT') {
       parsedValues['type'] = 1;
     }
+    parsedValues['ticker'] = parsedValues['ticker'].toUpperCase();
 
     return parsedValues;
   };

@@ -1,4 +1,6 @@
 import Loader from 'components/Loading/Loader';
+import Pagination from 'components/Pagination';
+import { PaginationContainer } from 'pages/Marketplaces/MarketplaceOrders/styles';
 import { useEffect, useState } from 'react';
 import Button from '../../Button';
 import {
@@ -21,6 +23,9 @@ interface IFlexDashboardProps {
   loading?: boolean;
   ItemComponent: React.FC<any>;
   ModalComponent?: React.FC<any>;
+  page?: number;
+  setPage?: (page: number) => void;
+  totalPages?: number;
 }
 
 const FlexDashboard: React.FC<IFlexDashboardProps> = ({
@@ -30,6 +35,9 @@ const FlexDashboard: React.FC<IFlexDashboardProps> = ({
   headers,
   ModalComponent,
   loading,
+  page,
+  setPage,
+  totalPages,
 }) => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -95,6 +103,20 @@ const FlexDashboard: React.FC<IFlexDashboardProps> = ({
         <EmptyTab>
           <span>None found</span>
         </EmptyTab>
+      )}
+
+      {totalPages && totalPages !== 1 && (
+        <PaginationContainer>
+          <Pagination
+            count={totalPages - 1}
+            page={page ? page : 0}
+            onPaginate={(page: any) => {
+              if (setPage) {
+                setPage(page);
+              }
+            }}
+          />
+        </PaginationContainer>
       )}
     </Container>
   );

@@ -119,9 +119,18 @@ const sections = (assetId: string, type: number): ISection[] => {
       break;
 
     case 8:
-      section[0].fields.push({
-        label: 'Mime',
-      });
+      section[0].fields.push(
+        {
+          label: 'Mime',
+        },
+        {
+          label: 'Data',
+          props: {
+            type: 'textarea',
+            span: 2,
+          },
+        },
+      );
       break;
 
     case 10:
