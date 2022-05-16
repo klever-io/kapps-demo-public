@@ -44,8 +44,8 @@ const ConfirmModal: React.FC<IConfirmModalProps> = ({
   };
 
   return (
-    <Container onClick={handleClose}>
-      <Content onClick={e => e.stopPropagation()}>
+    <Container onMouseDown={handleClose}>
+      <Content onMouseDown={e => e.stopPropagation()}>
         <h1>Transaction Payload:</h1>
         <DetailsRow>
           <SyntaxHighlighter

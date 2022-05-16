@@ -20,7 +20,7 @@ More info on: [Klever Docs/Kapps](https://docs.klever.finance/#kapps)
 
 ## Website link:
 
-### https://kapp-demos.web.app/connect
+### [kapps.klever.finance](https://kapps.klever.finance)
 
 <hr/>
 

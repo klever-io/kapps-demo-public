@@ -40,8 +40,8 @@ const CustomICOForm: React.FC = () => {
         <Scope path={`pack[${outerIndex}].packItem[${innerIndex}]`}>
           <FormSection inner>
             <SectionTitle>Pack Item</SectionTitle>
-            <FormInput title="Amount" name="amount" />
-            <FormInput title="Price" name="price" />
+            <FormInput title="Amount" name="amount" required />
+            <FormInput title="Price" name="price" required />
           </FormSection>
         </Scope>,
       );

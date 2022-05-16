@@ -18,8 +18,8 @@ const AssetModal: React.FC<IAssetModalProps> = ({
   };
 
   return (
-    <Container onClick={handleClose}>
-      <Content onClick={e => e.stopPropagation()}>
+    <Container onMouseDown={handleClose}>
+      <Content onMouseDown={e => e.stopPropagation()}>
         <h1>{asset?.assetId}</h1>
         <DetailsRow>
           <SyntaxHighlighter
