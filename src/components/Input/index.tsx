@@ -23,6 +23,8 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   bool?: boolean;
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleConfirmClick?: () => void;
+
   section?: ISection;
   index?: number;
 }
@@ -45,6 +47,7 @@ const Input: React.FC<IInputProps> = ({
   bool = false,
   section = {},
   index,
+  handleConfirmClick,
   ...rest
 }) => {
   const containerProps = {
@@ -113,6 +116,13 @@ const Input: React.FC<IInputProps> = ({
       };
     }
   };
+
+  const keyDownHandle = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleConfirmClick && handleConfirmClick();
+    }
+  };
+
   const inputProps = {
     placeholder: title,
     error,
@@ -121,6 +131,7 @@ const Input: React.FC<IInputProps> = ({
     type,
     required,
     onChange: handleChange,
+    onKeyDown: keyDownHandle,
     ...rest,
   };
 
