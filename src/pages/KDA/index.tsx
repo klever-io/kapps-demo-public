@@ -1,6 +1,5 @@
 import AssetModal from 'components/Modals/Asset';
 import Header from 'components/Pages/Header';
-import { IAccountResponse } from 'pages/Staking';
 import { Container, Title } from 'pages/styles';
 import React, { useCallback, useEffect } from 'react';
 import api from 'services/api';
@@ -30,22 +29,7 @@ const Marketplace = () => {
 
   const walletAddress = sessionStorage.getItem('walletAddress') || '';
 
-  useEffect(() => {
-    const getTotalPages = async () => {
-      const response: IAccountResponse = await api.get({
-        route: `address/${walletAddress}`,
-      });
-
-      if (response.error) {
-        return;
-      }
-
-      setTotalPages(Object.keys(response.data.account.assets).length / 10);
-    };
-    getTotalPages();
-  }, [walletAddress]);
-
-  const getAsset = useCallback(async () => {
+  const getAssets = useCallback(async () => {
     setAssets([]);
     setLoading(true);
     const response: IAssetResponse = await api.get({
@@ -67,16 +51,22 @@ const Marketplace = () => {
     });
 
     setAssets(auxAssets);
-    setPage(response.pagination.next ? response.pagination.next - 1 : 0);
+    setPage(
+      response.pagination.next !== response.pagination.previous
+        ? response.pagination.next - 1
+        : response.pagination.next,
+    );
+    setTotalPages(response.pagination.totalPages);
+
     setLoading(false);
   }, [walletAddress, page]);
 
   useEffect(() => {
-    getAsset();
+    getAssets();
   }, [page]);
 
   const reload = () => {
-    getAsset();
+    getAssets();
     setPage(0);
   };
 

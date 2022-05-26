@@ -135,7 +135,7 @@ const sections = (type: string): ISection[] => {
                       },
                     },
                     {
-                      label: 'Has Role Set ICO Prices',
+                      label: 'Has Role Set ITO Prices',
                       props: {
                         type: 'checkbox',
                         toggleOptions: ['No', 'Yes'],
@@ -316,7 +316,7 @@ const sections = (type: string): ISection[] => {
                       },
                     },
                     {
-                      label: 'Has Role Set ICO Prices',
+                      label: 'Has Role Set ITO Prices',
                       props: {
                         type: 'checkbox',
                         toggleOptions: ['No', 'Yes'],

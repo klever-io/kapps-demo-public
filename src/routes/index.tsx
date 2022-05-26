@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Layout from '../components/Layout';
 
-import ICO from '../pages/ICO';
+import ITO from '../pages/ITO';
 import KDA from '../pages/KDA';
 import Staking from '../pages/Staking';
-import CreateICO from '../pages/ICO/CreateICO';
+import CreateITO from '../pages/ITO/CreateITO';
 import CreateKDA from '../pages/KDA/CreateKDA';
 import Marketplaces from '../pages/Marketplaces';
 import CreateMarketplace from '../pages/Marketplaces/CreateMarketplace';
@@ -36,8 +36,8 @@ const Routes: React.FC = () => {
               component={CreateMarketplace}
             />
 
-            <Route exact path="/ico" component={ICO} />
-            <Route exact path="/ico/create" component={CreateICO} />
+            <Route exact path="/ito" component={ITO} />
+            <Route exact path="/ito/create" component={CreateITO} />
 
             <Route exact path="/kda" component={KDA} />
             <Route exact path="/kda/create" component={CreateKDA} />

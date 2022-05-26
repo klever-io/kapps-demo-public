@@ -53,6 +53,10 @@ export const options = [
     label: 'Change Royalties Receiver (12)',
     value: 12,
   },
+  {
+    label: 'Update Staking (13)',
+    value: 13,
+  },
 ];
 const sections = (assetId: string, type: number): ISection[] => {
   const address = sessionStorage.getItem('walletAddress') || '';
@@ -103,7 +107,7 @@ const sections = (assetId: string, type: number): ISection[] => {
                     },
                   },
                   {
-                    label: 'Has Role Set ICO Prices',
+                    label: 'Has Role Set ITO Prices',
                     props: {
                       type: 'checkbox',
                       toggleOptions: ['No', 'Yes'],
@@ -174,7 +178,27 @@ const sections = (assetId: string, type: number): ISection[] => {
           },
         ],
       );
+      break;
 
+    case 13:
+      section.push({
+        title: 'Staking',
+        fields: [
+          {
+            label: 'Type',
+            props: {
+              type: 'checkbox',
+              toggleOptions: ['APR', 'FPR'],
+              defaultValue: 0,
+              disabled: true,
+            },
+          },
+          { label: 'APR', props: { type: 'number' } },
+          { label: 'Min Epochs To Claim', props: { type: 'number' } },
+          { label: 'Min Epochs To Unstake', props: { type: 'number' } },
+          { label: 'Min Epochs To Withdraw', props: { type: 'number' } },
+        ],
+      });
       break;
 
     default:

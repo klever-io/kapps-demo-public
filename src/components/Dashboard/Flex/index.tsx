@@ -105,10 +105,10 @@ const FlexDashboard: React.FC<IFlexDashboardProps> = ({
         </EmptyTab>
       )}
 
-      {totalPages && totalPages !== 1 && (
+      {totalPages && totalPages !== 1 ? (
         <PaginationContainer>
           <Pagination
-            count={totalPages - 1}
+            count={totalPages}
             page={page ? page : 0}
             onPaginate={(page: any) => {
               if (setPage) {
@@ -117,6 +117,8 @@ const FlexDashboard: React.FC<IFlexDashboardProps> = ({
             }}
           />
         </PaginationContainer>
+      ) : (
+        <></>
       )}
     </Container>
   );

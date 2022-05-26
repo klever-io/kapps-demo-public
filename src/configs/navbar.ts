@@ -19,8 +19,8 @@ const navbarItems: INavbarItem[] = [
     Icon: GiCardExchange,
   },
   {
-    name: 'ICO',
-    pathTo: '/ico',
+    name: 'ITO',
+    pathTo: '/ito',
     Icon: GiTwoCoins,
   },
   {

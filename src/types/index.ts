@@ -62,7 +62,7 @@ export interface IAsset {
     isNFTMintStopped: boolean;
   };
   roles?: IRolesInfo[];
-  ico?: {
+  ito?: {
     isActive: boolean;
     maxAmount: number;
     mintedAmount: number;
@@ -87,7 +87,7 @@ interface IProperties {
 export interface IRolesInfo {
   address: string;
   hasRoleMint: boolean;
-  hasRoleSetICOPrices: boolean;
+  hasRoleSetITOPrices: boolean;
 }
 export interface IPack {
   name: string;

@@ -7,6 +7,7 @@ interface IProps {
   valid?: boolean;
   span?: number;
   toggle?: boolean;
+  onKeyDown?: any;
 }
 
 export const StyledInput = styled.input<IProps>`
