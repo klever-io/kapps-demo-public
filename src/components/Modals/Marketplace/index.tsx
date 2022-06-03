@@ -1,4 +1,4 @@
-import { useSdk } from '@klever/sdk';
+import { useSdk } from '../../../hooks';
 import Button from 'components/Button';
 import { ISellOrderItem } from 'components/Cards/SellOrderItem';
 import Input from 'components/Input';

@@ -1,4 +1,5 @@
-import { Account, useSdk } from '@klever/sdk';
+import { Account } from '@klever/sdk';
+import { useSdk } from '../../hooks';
 import { Buffer } from 'buffer';
 import Loader from 'components/Loading/Loader';
 import Header from 'components/Pages/Header';

@@ -1,4 +1,4 @@
-import { useSdk } from '@klever/sdk';
+import { useSdk } from '../../hooks';
 import CopyWrapper from 'components/CopyWrapper';
 import Loader from 'components/Loading/Loader';
 import { useDidUpdateEffect } from 'hooks';

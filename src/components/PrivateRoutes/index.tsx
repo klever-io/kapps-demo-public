@@ -1,4 +1,5 @@
-import { Account, useSdk } from '@klever/sdk';
+import { Account } from '@klever/sdk';
+import { useSdk } from '../../hooks';
 import { useEffect } from 'react';
 import { Route, Redirect } from 'react-router';
 
