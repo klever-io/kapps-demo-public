@@ -103,6 +103,11 @@ export const TabsContent = styled.div`
 export const EmptyTab = styled.div`
   width: 100%;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+
   span {
     display: table;
     margin: 0 auto;

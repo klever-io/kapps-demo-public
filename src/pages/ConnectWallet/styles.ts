@@ -11,9 +11,13 @@ export const Logo = styled.div`
 export const Content = styled.div`
   height: 60%;
   min-height: 50vh;
-  display: grid;
-  align-content: center;
-  gap: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4rem;
+
+  padding-top: 2rem;
 
   width: 100%;
   max-width: 90vw;
@@ -136,4 +140,9 @@ export const DragContainer = styled.div`
   height: 100vh;
 
   z-index: 90;
+`;
+
+export const ButtonContainer = styled.div`
+  width: 100%;
+  max-width: 30rem;
 `;
