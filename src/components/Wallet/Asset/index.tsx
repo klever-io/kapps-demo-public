@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import {
+  ButtonContainer,
   Container,
   TableBody,
   TableContainer,
@@ -13,6 +14,7 @@ import api from 'services/api';
 import { useSdk } from '../../../hooks';
 import { IAccountAsset, IAddressResponse } from 'types';
 import Loader from 'components/Loading/Loader';
+import Button from 'components/Button';
 
 interface IAsset {
   name: string;
@@ -21,7 +23,11 @@ interface IAsset {
   precision: number;
 }
 
-const Asset: React.FC = () => {
+export interface IAssetsProps {
+  reload: () => void;
+}
+
+const Asset: React.FC<IAssetsProps> = ({ reload }) => {
   const [assets, setAssets] = useState<IAsset[]>([]);
   const [loading, setLoading] = useState(true);
   const [nonInitialized, setNonInitialized] = useState(false);
@@ -62,6 +68,20 @@ const Asset: React.FC = () => {
     getAssets();
   }, []);
 
+  const handleRequestKLV = async () => {
+    setLoading(true);
+
+    const response = await api.post({
+      route: `transaction/send-user-funds/${sdk.getAccount()?.getAddress()}`,
+    });
+    if (response.error) {
+      return;
+    }
+    setTimeout(() => {
+      reload();
+    }, 2000);
+  };
+
   return (
     <Container>
       {!loading && !nonInitialized && assets.length === 0 && (
@@ -76,6 +96,9 @@ const Asset: React.FC = () => {
             Wallet address not initialized. Please make a transfer before
             procceeding
           </span>
+          <ButtonContainer>
+            <Button onClick={handleRequestKLV}>Request Test KLV</Button>
+          </ButtonContainer>
         </EmptyTab>
       )}
       {assets.length > 0 && (

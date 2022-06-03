@@ -1,13 +1,15 @@
-import { Account } from '@klever/sdk';
-import { useSdk } from '../../hooks';
+import { Account, core } from '@klever/sdk';
 import { Buffer } from 'buffer';
+import Button from 'components/Button';
 import Loader from 'components/Loading/Loader';
 import Header from 'components/Pages/Header';
 import { useDidUpdateEffect } from 'hooks';
-import { Container, Title } from 'pages/styles';
+import { Container, Network, Title } from 'pages/styles';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import { useSdk } from '../../hooks';
 import {
+  ButtonContainer,
   Content,
   ContentBody,
   ContentTitle,
@@ -71,6 +73,14 @@ const ConnectWallet: React.FC = () => {
       .join('');
 
     return encodedToHex;
+  };
+
+  const encodePrivateKey = (privateKey: string): string => {
+    const encodedToBase64 = Buffer.from(privateKey, 'latin1').toString(
+      'base64',
+    );
+
+    return encodedToBase64;
   };
 
   const getWalletAddress = (contents: string | string[]) => {
@@ -198,6 +208,39 @@ const ConnectWallet: React.FC = () => {
     validateAddress();
   }, [privateKey, walletAddress]);
 
+  const pemParser = (account: any) => {
+    return `-----BEGIN PRIVATE KEY for ${
+      account.Address
+    }-----\n${encodePrivateKey(account.PrivateKey)}\n-----END PRIVATE KEY for ${
+      account.Address
+    }-----`;
+  };
+
+  const downloadTextFile = (text: string, filename: string) => {
+    const element = document.createElement('a');
+    element.setAttribute(
+      'href',
+      'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
+    );
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  };
+
+  const handleGeneratePEM = async () => {
+    const newAccount = await core.createAccount();
+    const pem = pemParser(newAccount);
+
+    downloadTextFile(pem, 'wallet.pem');
+
+    return;
+  };
+
   return (
     <DragContainer
       onDragOver={preventEvent}
@@ -258,11 +301,22 @@ const ConnectWallet: React.FC = () => {
                   </ErrorContainer>
                 )}
               </ContentBody>
+              <ButtonContainer>
+                <Button styleType="outlined" onClick={handleGeneratePEM}>
+                  Generate new account
+                </Button>
+              </ButtonContainer>
             </>
           )}
           {loading && <Loader />}
         </Content>
       </Container>
+      <Network>
+        Running on Kleverchain{' '}
+        {process.env.REACT_APP_DEFAULT_API_HOST?.includes('devnet')
+          ? 'Devnet'
+          : 'Testnet'}
+      </Network>
     </DragContainer>
   );
 };

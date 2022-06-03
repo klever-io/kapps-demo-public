@@ -50,3 +50,7 @@ export const TableRow = styled.div`
     color: ${props => props.theme.wallet.white};
   }
 `;
+export const ButtonContainer = styled.div`
+  width: 100%;
+  max-width: 40rem;
+`;

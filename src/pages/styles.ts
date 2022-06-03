@@ -16,3 +16,11 @@ export const Title = styled.h1`
   font-weight: 400;
   color: ${props => props.theme.white};
 `;
+
+export const Network = styled.div`
+  color: ${props => props.theme.white};
+
+  position: fixed;
+  bottom: 0;
+  right: 0;
+`;

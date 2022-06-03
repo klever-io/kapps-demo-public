@@ -28,7 +28,7 @@ const Wallet: React.FC = () => {
   const TabComponent: React.FC = () => {
     switch (selectedTab) {
       case 0:
-        return <Asset />;
+        return <Asset reload={reloadFunc} />;
       case 1:
         return <NFTs />;
       default:
