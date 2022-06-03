@@ -8,7 +8,7 @@ import dark from './styles/themes/dark';
 import Routes from './routes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { SdkProvider } from '@klever/sdk';
+import { SdkProvider } from './hooks';
 
 const App: React.FC = () => (
   <ThemeProvider theme={dark}>

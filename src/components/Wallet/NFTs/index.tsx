@@ -1,4 +1,4 @@
-import { useSdk } from '@klever/sdk';
+import { useSdk } from '../../../hooks';
 import Accordion from 'components/Accordion';
 import Loader from 'components/Loading/Loader';
 import { IAccountResponse } from 'pages/Staking';

@@ -1,4 +1,4 @@
-import { useSdk } from '@klever/sdk';
+import { useSdk } from '../../../hooks';
 import CustomITOForm from 'components/CustomForm/ITO';
 import { IDropdownItem } from 'components/Form/FormInput/Select';
 import Loading from 'components/Loading';

@@ -10,7 +10,7 @@ import {
 
 import { EmptyTab } from '../../../pages/Wallet/styles';
 import api from 'services/api';
-import { useSdk } from '@klever/sdk';
+import { useSdk } from '../../../hooks';
 import { IAccountAsset, IAddressResponse } from 'types';
 import Loader from 'components/Loading/Loader';
 

@@ -1,4 +1,4 @@
-import { useSdk } from '@klever/sdk';
+import { useSdk } from '../../../hooks';
 import Form, { ISection } from 'components/Form';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modals/Confirm';

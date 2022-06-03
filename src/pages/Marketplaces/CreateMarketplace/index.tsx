@@ -1,4 +1,4 @@
-import { useSdk } from '@klever/sdk';
+import { useSdk } from '../../../hooks';
 import Form from '../../../components/Form';
 import { Container, Title } from 'pages/styles';
 import Header from 'components/Pages/Header';

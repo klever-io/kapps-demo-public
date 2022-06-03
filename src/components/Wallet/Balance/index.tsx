@@ -1,4 +1,4 @@
-import { useSdk } from '@klever/sdk';
+import { useSdk } from '../../../hooks';
 import Loader from 'components/Loading/Loader';
 import { useState, useEffect } from 'react';
 import { AmountContainer } from './styles';
