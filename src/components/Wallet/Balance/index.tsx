@@ -12,7 +12,7 @@ const Balance: React.FC = () => {
   const precision = 6; //KLV precision
 
   useEffect(() => {
-    if (sdk.getAccount() && sdk.isLoaded()) {
+    if (sdk.getAccount()) {
       const fetchBalance = async () => {
         const balance = await sdk.getAccount()?.getBalance();
 
@@ -22,7 +22,7 @@ const Balance: React.FC = () => {
 
       fetchBalance();
     }
-  }, [sdk.isLoaded()]);
+  }, []);
   return (
     <AmountContainer>
       <p>KLV BALANCE</p>
