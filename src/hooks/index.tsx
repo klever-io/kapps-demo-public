@@ -14,7 +14,7 @@ export const useDidUpdateEffect = (fn: Function, inputs: Array<any>): void => {
 };
 
 interface ISdkContext {
-  isLoaded(): boolean;
+  isLoaded(): Promise<boolean>;
   getAccount(): Account | null;
   setAccount(account: Account): void;
 }
