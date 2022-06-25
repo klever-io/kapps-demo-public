@@ -17,7 +17,11 @@ const sections = (type: string): ISection[] => {
             },
             {
               label: 'Owner',
-              props: { required: true, defaultValue: address },
+              props: {
+                required: true,
+                defaultValue: address,
+                tooltip: 'Owner address',
+              },
             },
             {
               label: 'Precision',
@@ -52,7 +56,6 @@ const sections = (type: string): ISection[] => {
         },
         {
           title: 'Uris',
-
           fields: [
             {
               label: 'Uri',
@@ -63,7 +66,16 @@ const sections = (type: string): ISection[] => {
                   title: 'Uri',
                   inner: true,
                   innerPath: 'uris',
-                  fields: [{ label: 'Label' }, { label: 'Address' }],
+                  fields: [
+                    {
+                      label: 'Label',
+                      props: { tooltip: 'Uri identifier' },
+                    },
+                    {
+                      label: 'Address',
+                      props: { tooltip: 'Uri address' },
+                    },
+                  ],
                 },
               },
             },
@@ -74,7 +86,12 @@ const sections = (type: string): ISection[] => {
           fields: [
             {
               label: 'Address',
-              props: { required: true, defaultValue: address, span: 2 },
+              props: {
+                required: true,
+                defaultValue: address,
+                span: 2,
+                tooltip: 'Royalty receiver address',
+              },
             },
             {
               label: 'Transfer Percentage',
@@ -86,8 +103,20 @@ const sections = (type: string): ISection[] => {
                   inner: true,
                   innerPath: 'royalties.transferPercentage',
                   fields: [
-                    { label: 'Amount', props: { type: 'number' } },
-                    { label: 'Percentage', props: { type: 'number' } },
+                    {
+                      label: 'Amount',
+                      props: {
+                        type: 'number',
+                        tooltip: 'Max amount for that percentage',
+                      },
+                    },
+                    {
+                      label: 'Percentage',
+                      props: {
+                        type: 'number',
+                        tooltip: 'Fee % (precision 2)',
+                      },
+                    },
                   ],
                 },
               },
@@ -104,12 +133,31 @@ const sections = (type: string): ISection[] => {
                 toggleOptions: ['APR', 'FPR'],
                 defaultValue: 0,
                 disabled: true,
+                tooltip: '0: APR, 1: FPR',
               },
             },
-            { label: 'APR', props: { type: 'number' } },
-            { label: 'Min Epochs To Claim', props: { type: 'number' } },
-            { label: 'Min Epochs To Unstake', props: { type: 'number' } },
-            { label: 'Min Epochs To Withdraw', props: { type: 'number' } },
+            { label: 'APR', props: { type: 'number', tooltip: 'Percentage' } },
+            {
+              label: 'Min Epochs To Claim',
+              props: {
+                type: 'number',
+                tooltip: 'Minimum epochs to claim rewards',
+              },
+            },
+            {
+              label: 'Min Epochs To Unstake',
+              props: {
+                type: 'number',
+                tooltip: 'Minimum epochs to unstake',
+              },
+            },
+            {
+              label: 'Min Epochs To Withdraw',
+              props: {
+                type: 'number',
+                tooltip: 'Minimum epochs to withdraw after unstake',
+              },
+            },
           ],
         },
         {
@@ -125,13 +173,20 @@ const sections = (type: string): ISection[] => {
                   inner: true,
                   innerPath: 'roles',
                   fields: [
-                    { label: 'Address', props: { span: 2 } },
+                    {
+                      label: 'Address',
+                      props: {
+                        span: 2,
+                        tooltip: 'Target Address',
+                      },
+                    },
                     {
                       label: 'Has Role Mint',
                       props: {
                         type: 'checkbox',
                         toggleOptions: ['No', 'Yes'],
                         bool: true,
+                        tooltip: 'Should be able to mint?',
                       },
                     },
                     {
@@ -140,6 +195,7 @@ const sections = (type: string): ISection[] => {
                         type: 'checkbox',
                         toggleOptions: ['No', 'Yes'],
                         bool: true,
+                        tooltip: 'Should be able to set ITO prices?',
                       },
                     },
                   ],
@@ -157,6 +213,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should be freezable?',
               },
             },
             {
@@ -166,6 +223,7 @@ const sections = (type: string): ISection[] => {
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
                 defaultValue: 'false',
+                tooltip: 'Should be wipeable?',
               },
             },
             {
@@ -174,6 +232,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should be pausable?',
               },
             },
             {
@@ -182,6 +241,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should be mintable?',
               },
             },
             {
@@ -190,6 +250,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should be burnable?',
               },
             },
             {
@@ -198,6 +259,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should the owner be changeable?',
               },
             },
             {
@@ -206,15 +268,14 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should roles be add-able?',
               },
             },
           ],
         },
       );
       break;
-    //======================================================================================================================================
-    //======================================================================================================================================
-    //======================================================================================================================================
+
     case 'NFT':
       section.push(
         {
@@ -226,7 +287,11 @@ const sections = (type: string): ISection[] => {
             },
             {
               label: 'Owner',
-              props: { required: true, defaultValue: address },
+              props: {
+                required: true,
+                defaultValue: address,
+                tooltip: 'Owner address',
+              },
             },
             {
               label: 'Max Supply',
@@ -257,7 +322,20 @@ const sections = (type: string): ISection[] => {
                   title: 'Uri',
                   inner: true,
                   innerPath: 'uris',
-                  fields: [{ label: 'Label' }, { label: 'Address' }],
+                  fields: [
+                    {
+                      label: 'Label',
+                      props: {
+                        tooltip: 'Uri identifier',
+                      },
+                    },
+                    {
+                      label: 'Address',
+                      props: {
+                        tooltip: 'Uri address',
+                      },
+                    },
+                  ],
                 },
               },
             },
@@ -268,7 +346,11 @@ const sections = (type: string): ISection[] => {
           fields: [
             {
               label: 'Address',
-              props: { required: true, defaultValue: address },
+              props: {
+                required: true,
+                defaultValue: address,
+                tooltip: 'Target Address',
+              },
             },
             {
               label: 'Market Fixed',
@@ -306,13 +388,20 @@ const sections = (type: string): ISection[] => {
                   inner: true,
                   innerPath: 'roles',
                   fields: [
-                    { label: 'Address', props: { span: 2 } },
+                    {
+                      label: 'Address',
+                      props: {
+                        span: 2,
+                        tooltip: 'Target Address',
+                      },
+                    },
                     {
                       label: 'Has Role Mint',
                       props: {
                         type: 'checkbox',
                         toggleOptions: ['No', 'Yes'],
                         bool: true,
+                        tooltip: 'Should be able to mint?',
                       },
                     },
                     {
@@ -321,6 +410,7 @@ const sections = (type: string): ISection[] => {
                         type: 'checkbox',
                         toggleOptions: ['No', 'Yes'],
                         bool: true,
+                        tooltip: 'Should be able to set ITO prices?',
                       },
                     },
                   ],
@@ -338,6 +428,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should be freezable?',
               },
             },
             {
@@ -347,6 +438,7 @@ const sections = (type: string): ISection[] => {
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
                 defaultValue: 'false',
+                tooltip: 'Should be wipeable?',
               },
             },
             {
@@ -355,6 +447,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should be pausable?',
               },
             },
             {
@@ -363,6 +456,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should be mintable?',
               },
             },
             {
@@ -371,6 +465,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should be burnable?',
               },
             },
             {
@@ -379,6 +474,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should the owner be changeable?',
               },
             },
             {
@@ -387,6 +483,7 @@ const sections = (type: string): ISection[] => {
                 type: 'checkbox',
                 toggleOptions: ['No', 'Yes'],
                 bool: true,
+                tooltip: 'Should roles be add-able?',
               },
             },
           ],

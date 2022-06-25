@@ -7,6 +7,9 @@ import {
   ToggleContainer,
 } from './styles';
 
+import { TooltipSpace } from 'components/Form/styles';
+import { InfoIcon, TooltipContainer } from 'components/Form/FormInput/styles';
+
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   title?: string;
   name?: string;
@@ -21,6 +24,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
   toggleOptions?: [string, string];
   bool?: boolean;
+  tooltip?: string;
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleConfirmClick?: () => void;
@@ -32,6 +36,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const Input: React.FC<IInputProps> = ({
   title = 'Placeholder',
   name = '',
+  tooltip = '',
   description = '',
   error = false,
   valid = false,
@@ -135,11 +140,24 @@ const Input: React.FC<IInputProps> = ({
     ...rest,
   };
 
+  const tooltipComponent = (field: string) => {
+    if (field !== '') {
+      return (
+        <TooltipSpace>
+          <TooltipContainer tooltip={field}>
+            <InfoIcon />
+          </TooltipContainer>
+        </TooltipSpace>
+      );
+    }
+  };
+
   return (
     <Container {...containerProps}>
       {type === 'checkbox' ? (
         <>
           <InputLabel>{title}</InputLabel>
+          {tooltipComponent(tooltip)}
 
           <ToggleContainer>
             {toggleOptions.length > 1 && toggleOptions[0]}

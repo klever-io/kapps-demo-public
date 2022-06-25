@@ -148,11 +148,13 @@ const CreateMarketplace = () => {
             title="Asset"
             placeholder="Select a NFT collection"
             data={assets}
+            tooltip="NFT Collection"
             onChange={e => handleSelectCollection(e)}
           />
           <Select
             title="Asset ID"
             placeholder="ID"
+            tooltip="Target Asset"
             data={NFTs}
             onChange={e => handleSelectID(e)}
             disabled={NFTs.length === 0}

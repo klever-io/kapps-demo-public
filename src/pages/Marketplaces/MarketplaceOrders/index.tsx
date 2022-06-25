@@ -113,6 +113,7 @@ const Marketplace = () => {
       (transaction: IBuyOrderTransaction) => {
         return {
           orderID: transaction.receipts[1].orderId,
+          amount: transaction.contract[0].parameter.amount,
         };
       },
     );
@@ -123,12 +124,26 @@ const Marketplace = () => {
       const sellOrderIndex = sellOrders.findIndex(
         (sellOrder: any) => sellOrder.orderID === buyOrder.orderID,
       );
+      const sellOrder = sellOrders[sellOrderIndex];
 
-      if (sellOrderIndex !== -1) {
-        sellOrders[sellOrderIndex] = {
-          ...sellOrders[sellOrderIndex],
-          sold: true,
-        };
+      if (sellOrder.marketType === 'BuyItNowMarket') {
+        if (sellOrderIndex !== -1) {
+          sellOrders[sellOrderIndex] = {
+            ...sellOrders[sellOrderIndex],
+            sold: true,
+          };
+        }
+      } else {
+        if (
+          sellOrderIndex !== -1 &&
+          sellOrder.price &&
+          buyOrder.amount > sellOrder.price
+        ) {
+          sellOrders[sellOrderIndex] = {
+            ...sellOrders[sellOrderIndex],
+            sold: true,
+          };
+        }
       }
     });
 

@@ -10,15 +10,22 @@ const sections = (marketplaceID: string): ISection[] => {
           type: 'checkbox',
           toggleOptions: ['Fixed Price', 'Auction'],
           defaultValue: 0,
+          tooltip: '0: Instant Sell, 1: Auction',
         },
       },
       {
         label: 'Marketplace ID',
         props: {
           defaultValue: marketplaceID || '',
+          tooltip: 'Maketplace ID in which the sell order will be created',
         },
       },
-      { label: 'Currency ID' },
+      {
+        label: 'Currency ID',
+        props: {
+          tooltip: 'Transaction currency token',
+        },
+      },
       {
         label: 'Price',
         props: { type: 'number', tooltip: 'Instant-sell price' },
@@ -31,6 +38,7 @@ const sections = (marketplaceID: string): ISection[] => {
         label: 'End Time',
         props: {
           type: 'datetime-local',
+          tooltip: 'Expiration sell time',
         },
       },
     ],

@@ -164,6 +164,7 @@ const CreateKDA = () => {
           <Input
             title="Type"
             type="checkbox"
+            tooltip="Type of token"
             toggleOptions={['Token', 'NFT']}
             value={Number(type === 'NFT')}
             onChange={(e: any) => {

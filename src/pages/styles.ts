@@ -18,9 +18,10 @@ export const Title = styled.h1`
 `;
 
 export const Network = styled.div`
-  color: ${props => props.theme.white};
-
   position: fixed;
-  bottom: 0;
-  right: 0;
+
+  top: 10px;
+  left: 10px;
+  color: ${props => props.theme.navbar.text};
+  font-size: 1rem;
 `;

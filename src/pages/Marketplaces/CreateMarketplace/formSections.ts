@@ -5,18 +5,19 @@ const sections = (): ISection[] => {
   const section = [] as ISection[];
   section.push({
     fields: [
-      { label: 'Name' },
+      { label: 'Name', props: { tooltip: 'Marketplace name' } },
       {
         label: 'Referral Address',
         props: {
           defaultValue: address,
+          tooltip: 'Royalties receiving address',
         },
       },
       {
         label: 'Referral Percentage',
         props: {
           type: 'number',
-          tooltip: 'fee in percentage (precision 2)',
+          tooltip: 'Royalties percentage (precision 2)',
         },
       },
     ],

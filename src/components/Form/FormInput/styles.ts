@@ -204,6 +204,7 @@ export const RightContentContainer = styled.div`
 
 export const InfoIcon = styled(BsQuestionCircleFill)`
   height: 1rem;
+  color: ${({ theme }) => theme.input.border.dark};
 `;
 
 export const TooltipContainer = styled.div<{
@@ -229,7 +230,9 @@ export const TooltipContainer = styled.div<{
 
         border-radius: 5px;
 
-        z-index: 500;
+        z-index: 900;
+
+        white-space: pre;
 
         transform: translate(-50%, 100%);
         ${props =>

@@ -1,4 +1,5 @@
 import { lighten } from 'polished';
+import { IoMdAddCircle } from 'react-icons/io';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -7,6 +8,11 @@ export const Container = styled.div`
 
 export const Title = styled.h1`
   color: ${props => props.theme.white};
+`;
+
+export const FaucetIcon = styled(IoMdAddCircle)`
+  color: ${props => props.theme.white};
+  cursor: pointer;
 `;
 
 export const WalletHeader = styled.div`

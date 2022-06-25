@@ -76,17 +76,34 @@ export const ReactSelect = css`
   }
 `;
 
+export const TooltipContent = styled.div`
+  margin-left: 0.8rem;
+`;
+
 export const Container = styled.div<{ size: Sizes }>`
   display: flex;
 
   flex-direction: column;
 
   span {
+    p {
+      ${props =>
+        props.size === 'small' &&
+        css`
+          min-width: 4rem;
+          overflow: hidden;
+        `}
+    }
+    z-index: 1;
+    height: 1.6rem;
     padding-bottom: 0.5rem;
 
     color: ${props => props.theme.filter.title};
     font-weight: 600;
     font-size: 0.9rem;
+
+    display: flex;
+    z-index: 1;
   }
   ${ReactSelect}
 
@@ -94,7 +111,7 @@ export const Container = styled.div<{ size: Sizes }>`
     props.size === 'small' &&
     css`
       width: 100%;
-      max-width: 5rem;
+      max-width: 8rem;
 
       .react-select__control {
         padding: 0;

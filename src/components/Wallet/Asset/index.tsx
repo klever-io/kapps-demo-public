@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  ButtonContainer,
   Container,
   TableBody,
   TableContainer,
   TableHeader,
   TableRow,
+  ButtonContainer,
 } from './styles';
 
+import { toast } from 'react-toastify';
 import { EmptyTab } from '../../../pages/Wallet/styles';
 import api from 'services/api';
 import { useSdk } from '../../../hooks';
@@ -64,23 +65,28 @@ const Asset: React.FC<IAssetsProps> = ({ reload }) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    getAssets();
-  }, []);
-
   const handleRequestKLV = async () => {
     setLoading(true);
 
     const response = await api.post({
       route: `transaction/send-user-funds/${sdk.getAccount()?.getAddress()}`,
     });
-    if (response.error) {
+
+    if (response.code === 'internal_error') {
+      toast.error('You already ordered KLV in less than 24 hours!');
       return;
+    } else {
+      toast.success('Test KLV request successful!');
+
+      setTimeout(() => {
+        reload();
+      }, 3000);
     }
-    setTimeout(() => {
-      reload();
-    }, 2000);
   };
+
+  useEffect(() => {
+    getAssets();
+  }, []);
 
   return (
     <Container>
