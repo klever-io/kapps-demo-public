@@ -17,6 +17,7 @@ const ConnectWallet: React.FC<IConnectWalletProps> = ({ walletAddress }) => {
       setText(`${walletAddress.slice(0, 8)}... ${walletAddress.slice(-8)}`);
     }, 1000);
   };
+
   return (
     <Container walletAddress={!!walletAddress} onClick={handleClick}>
       {walletAddress ? <>{text}</> : <></>}

@@ -194,6 +194,9 @@ export const InputLabel = styled.label`
   left: 1rem;
   top: 0.9rem;
 
+  display: flex;
+  flex-direction: row;
+
   color: ${({ theme }) => theme.input.border.dark};
 
   transition: transform 0.2s ease;

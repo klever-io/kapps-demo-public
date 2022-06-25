@@ -40,6 +40,18 @@ export const Container = styled.div`
   }
 `;
 
+export const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.5rem;
+
+  span {
+    color: ${props => props.theme.navbar.text};
+    font-size: 0.8rem;
+  }
+`;
+
 export const MobileContent = styled.div<IMobileMenu>`
   padding: 1.5rem;
 

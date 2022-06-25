@@ -40,8 +40,18 @@ const CustomITOForm: React.FC = () => {
         <Scope path={`pack[${outerIndex}].packItem[${innerIndex}]`}>
           <FormSection inner>
             <SectionTitle>Pack Item</SectionTitle>
-            <FormInput title="Amount" name="amount" required />
-            <FormInput title="Price" name="price" required />
+            <FormInput
+              title="Amount"
+              name="amount"
+              required
+              tooltip={tooltipsMessages['Amount']}
+            />
+            <FormInput
+              title="Price"
+              name="price"
+              required
+              tooltip={tooltipsMessages['Price']}
+            />
           </FormSection>
         </Scope>,
       );
@@ -67,9 +77,15 @@ const CustomITOForm: React.FC = () => {
     return items;
   };
 
+  const tooltipsMessages = {
+    Amount:
+      'For NFTs: Amount sold; For token: Min amount for that price to be applied (with precision)',
+    Price: 'For NFTs: Price for that amount; For Tokens: Price of each token',
+  };
+
   return (
     <FormSection>
-      <SectionTitle> PackInfo </SectionTitle>
+      <SectionTitle>PackInfo</SectionTitle>
 
       {packItemQuantities.map((itemsQuantity, index) => {
         return (
@@ -79,6 +95,7 @@ const CustomITOForm: React.FC = () => {
               title="Pack Currency ID"
               name={`pack[${index}].packCurrencyID`}
               span={2}
+              tooltip={'Defines the currency in which the packs will be sold.'}
             />
             {getPackItems(index, itemsQuantity)}
           </FormSection>

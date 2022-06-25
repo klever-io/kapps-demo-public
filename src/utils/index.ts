@@ -1,6 +1,19 @@
 import { toast } from 'react-toastify';
 import api from 'services/api';
 import { IBroadcastResponse, ITransactionResponse } from 'types';
+
+export const getNetwork = () => {
+  const network = process.env.REACT_APP_DEFAULT_API_HOST;
+
+  if (network?.includes('mainnet')) {
+    return 'Mainnet';
+  } else if (network?.includes('devnet')) {
+    return 'Devnet';
+  }
+
+  return 'Testnet';
+};
+
 const parseData = (data: any) => {
   const dataEntries = Object.entries(data);
 

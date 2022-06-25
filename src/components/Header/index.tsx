@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
 import {
   Container,
+  HeaderContainer,
   DesktopContainer,
   Item,
   Logo,
@@ -21,9 +22,11 @@ import {
 import { INavbarItem, navbarItems } from '../../configs/navbar';
 import ConnectWallet from './ConnectWallet';
 import { BsWalletFill } from 'react-icons/bs';
+import { getNetwork } from '../../utils';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
+  const network = getNetwork();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -103,11 +106,14 @@ const Navbar: React.FC = () => {
   return (
     <>
       <Container>
-        <Link to="/wallet">
-          <Logo onClick={handleClose}>
-            <img src={logo} alt="Logo" width="224" height="28" />
-          </Logo>
-        </Link>
+        <HeaderContainer>
+          <Link to="/wallet">
+            <Logo onClick={handleClose}>
+              <img src={logo} alt="Logo" width="224" height="28" />
+            </Logo>
+          </Link>
+          <span>Running on Kleverchain {network}</span>
+        </HeaderContainer>
 
         {walletAddress && (
           <DesktopContainer>

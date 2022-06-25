@@ -69,6 +69,7 @@ const sections = (assetId: string, type: number): ISection[] => {
         props: {
           required: true,
           defaultValue: assetId,
+          tooltip: 'Target Asset',
         },
       },
     ],
@@ -76,7 +77,13 @@ const sections = (assetId: string, type: number): ISection[] => {
 
   switch (type) {
     case 1:
-      section[0].fields.push({ label: 'Amount', props: { type: 'number' } });
+      section[0].fields.push({
+        label: 'Amount',
+        props: {
+          type: 'number',
+          tooltip: 'Amount (with precision)',
+        },
+      });
       break;
 
     case 3:
@@ -97,13 +104,20 @@ const sections = (assetId: string, type: number): ISection[] => {
                 inner: true,
                 innerPath: 'role',
                 fields: [
-                  { label: 'Address', props: { span: 2 } },
+                  {
+                    label: 'Address',
+                    props: {
+                      span: 2,
+                      tooltip: 'Address of another wallet',
+                    },
+                  },
                   {
                     label: 'Has Role Mint',
                     props: {
                       type: 'checkbox',
                       toggleOptions: ['No', 'Yes'],
                       bool: true,
+                      tooltip: 'Should be able to mint?',
                     },
                   },
                   {
@@ -112,6 +126,7 @@ const sections = (assetId: string, type: number): ISection[] => {
                       type: 'checkbox',
                       toggleOptions: ['No', 'Yes'],
                       bool: true,
+                      tooltip: 'Should be able to set ITO prices?',
                     },
                   },
                 ],
@@ -126,12 +141,22 @@ const sections = (assetId: string, type: number): ISection[] => {
       section[0].fields.push(
         {
           label: 'Mime',
+          props: { tooltip: 'The nature and format of the metadata' },
+        },
+        {
+          label: 'Receiver',
+          props: {
+            defaultValue: address,
+            span: 2,
+            tooltip: 'Target address for transaction',
+          },
         },
         {
           label: 'Data',
           props: {
             type: 'textarea',
             span: 2,
+            tooltip: 'Metadata',
           },
         },
       );
@@ -140,6 +165,9 @@ const sections = (assetId: string, type: number): ISection[] => {
     case 10:
       section[0].fields.push({
         label: 'Logo',
+        props: {
+          tooltip: 'Logo image URL',
+        },
       });
       break;
 
@@ -157,7 +185,16 @@ const sections = (assetId: string, type: number): ISection[] => {
                 title: 'Uri',
                 inner: true,
                 innerPath: 'uris',
-                fields: [{ label: 'Label' }, { label: 'Address' }],
+                fields: [
+                  {
+                    label: 'Label',
+                    props: { tooltip: 'Uri identifier' },
+                  },
+                  {
+                    label: 'Address',
+                    props: { tooltip: 'Uri address' },
+                  },
+                ],
               },
             },
           },
@@ -174,6 +211,7 @@ const sections = (assetId: string, type: number): ISection[] => {
             label: 'Receiver',
             props: {
               defaultValue: address,
+              tooltip: 'Target address for transaction',
             },
           },
         ],
@@ -191,12 +229,37 @@ const sections = (assetId: string, type: number): ISection[] => {
               toggleOptions: ['APR', 'FPR'],
               defaultValue: 0,
               disabled: true,
+              tooltip: '0: APR, 1: FPR',
             },
           },
-          { label: 'APR', props: { type: 'number' } },
-          { label: 'Min Epochs To Claim', props: { type: 'number' } },
-          { label: 'Min Epochs To Unstake', props: { type: 'number' } },
-          { label: 'Min Epochs To Withdraw', props: { type: 'number' } },
+          {
+            label: 'APR',
+            props: {
+              type: 'number',
+              tooltip: 'Percentage',
+            },
+          },
+          {
+            label: 'Min Epochs To Claim',
+            props: {
+              type: 'number',
+              tooltip: 'Minimum epochs to claim rewards',
+            },
+          },
+          {
+            label: 'Min Epochs To Unstake',
+            props: {
+              type: 'number',
+              tooltip: 'Minimum epochs to unstake',
+            },
+          },
+          {
+            label: 'Min Epochs To Withdraw',
+            props: {
+              type: 'number',
+              tooltip: 'Minimum epochs to withdraw after unstake',
+            },
+          },
         ],
       });
       break;
@@ -208,9 +271,16 @@ const sections = (assetId: string, type: number): ISection[] => {
             label: 'Receiver',
             props: {
               defaultValue: address,
+              tooltip: 'Target address for transaction',
             },
           },
-          { label: 'Amount', props: { type: 'number' } },
+          {
+            label: 'Amount',
+            props: {
+              type: 'number',
+              tooltip: 'Amount (with precision)',
+            },
+          },
         ],
       );
 

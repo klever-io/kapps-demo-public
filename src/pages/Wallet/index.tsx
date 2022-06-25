@@ -1,9 +1,12 @@
+import { toast } from 'react-toastify';
 import Header from 'components/Pages/Header';
 import Balance from 'components/Wallet/Balance';
 import { Container, Title } from 'pages/styles';
 import React, { useEffect, useState } from 'react';
 import Asset from '../../components/Wallet/Asset';
 import NFTs from '../../components/Wallet/NFTs';
+import api from 'services/api';
+import { useSdk } from '../../hooks';
 import {
   EmptyTab,
   TabContainer,
@@ -11,11 +14,13 @@ import {
   TabItem,
   TabsContent,
   WalletHeader,
+  FaucetIcon,
 } from './styles';
 
 const Wallet: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [reload, setReload] = useState(false);
+  const sdk = useSdk();
 
   const tabItems = ['Assets', 'NFTs'];
 
@@ -55,13 +60,41 @@ const Wallet: React.FC = () => {
     reload: reloadFunc,
   };
 
+  const handleRequestKLV = async () => {
+    setReload(true);
+
+    const response = await api.post({
+      route: `transaction/send-user-funds/${sdk.getAccount()?.getAddress()}`,
+    });
+
+    if (response.code === 'internal_error') {
+      toast.error('You already ordered KLV in less than 24 hours!');
+      return;
+    } else {
+      toast.success('Test KLV request successful!');
+
+      setTimeout(() => {
+        reloadFunc();
+      }, 3000);
+    }
+  };
+
   return (
     <Container>
       <WalletHeader>
         <Header {...headerProps}>
           <Title>Wallet</Title>
         </Header>
-        {!reload && <Balance />}
+        {!reload && (
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <Balance />
+            <FaucetIcon
+              size={23}
+              title="Request daily KLV"
+              onClick={() => handleRequestKLV()}
+            />
+          </div>
+        )}
       </WalletHeader>
 
       {!reload && (

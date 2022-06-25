@@ -311,20 +311,28 @@ const SellOrderModal: React.FC<ISellOrderModalProps> = ({
             {'Price: ' + item.price?.toLocaleString() + ' ' + item.currencyID}
           </DetailsRow>
         ) : (
-          <DetailsRow>
-            {' '}
-            {'reservePrice: ' + item.reservePrice + ' ' + item.currencyID}
-          </DetailsRow>
+          <>
+            {item?.price && (
+              <DetailsRow>
+                {'Instant Buy Price: ' +
+                  item.price?.toLocaleString() +
+                  ' ' +
+                  item.currencyID}
+              </DetailsRow>
+            )}
+            <DetailsRow>
+              {' '}
+              {'Reserve Price: ' + item.reservePrice + ' ' + item.currencyID}
+            </DetailsRow>
+          </>
         )}
         {item.marketType === 'BuyItNowMarket' ? (
           item.sold && <DetailsRow>Sold</DetailsRow>
         ) : (
           <DetailsRow>
-            {item.sold && (
-              <DetailsRow>
-                {'Highest Bid: ' + highestBid + ' ' + item.currencyID}
-              </DetailsRow>
-            )}
+            <DetailsRow>
+              {'Highest Bid: ' + highestBid + ' ' + item.currencyID}
+            </DetailsRow>
           </DetailsRow>
         )}
         {initialLoading && (

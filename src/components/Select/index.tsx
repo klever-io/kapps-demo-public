@@ -2,7 +2,8 @@ import Loader from 'components/Loading/Loader';
 import React from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import ReactSelect, { components } from 'react-select';
-import { Container, LoaderContainer } from './styles';
+import { Container, LoaderContainer, TooltipContent } from './styles';
+import { TooltipContainer, InfoIcon } from 'components/Form/FormInput/styles';
 
 export interface ISelectItem {
   label: string;
@@ -18,6 +19,7 @@ export interface IFilter {
   title?: string;
   data: ISelectItem[];
   disabled?: boolean;
+  tooltip?: string;
   placeholder?: string;
   size?: Sizes;
   loading?: boolean;
@@ -34,6 +36,7 @@ const Select: React.FC<IFilter> = ({
   loading,
   onClick,
   onChange,
+  tooltip = '',
 }) => {
   const Placeholder = (props: any) => {
     return <components.Placeholder {...props} />;
@@ -50,7 +53,19 @@ const Select: React.FC<IFilter> = ({
   };
   return (
     <Container size={size}>
-      {title && <span>{title}</span>}
+      {title && (
+        <span>
+          <p>{title}</p>
+          {tooltip !== '' && (
+            <TooltipContent>
+              <TooltipContainer tooltip={tooltip}>
+                <InfoIcon />
+              </TooltipContainer>
+            </TooltipContent>
+          )}
+        </span>
+      )}
+
       {!loading && (
         <ReactSelect
           classNamePrefix="react-select"

@@ -8,15 +8,28 @@ const sections = (assets: IDropdownItem[]): ISection[] => {
     fields: [
       {
         label: 'AssetID',
-        props: { type: 'dropdown', options: assets, required: true },
+        props: {
+          type: 'dropdown',
+          options: assets,
+          required: true,
+          tooltip: 'Target Asset',
+        },
       },
       {
         label: 'Receiver Address',
-        props: { required: true, defaultValue: address },
+        props: {
+          required: true,
+          defaultValue: address,
+          tooltip: 'Wallet address that will receive the currency',
+        },
       },
       {
         label: 'Status',
-        props: { type: 'checkbox', toggleOptions: ['Inactive', 'Active'] },
+        props: {
+          type: 'checkbox',
+          toggleOptions: ['Inactive', 'Active'],
+          tooltip: 'Config ITO status (inactive or active)',
+        },
       },
       {
         label: 'Max Amount',

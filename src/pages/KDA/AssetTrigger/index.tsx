@@ -67,9 +67,9 @@ const KDATrigger = () => {
     setLoading(true);
 
     try {
-      const response = (await sdk.getAccount()?.sendAssetTrigger(payload)) as
-        | IBroadcastResponse
-        | undefined;
+      const response = (await sdk.getAccount()?.sendAssetTrigger(payload, {
+        metadata: payload.data,
+      })) as IBroadcastResponse | undefined;
       getFeedback(response, () => setPayload(response));
       setLoading(false);
     } catch (e) {

@@ -7,6 +7,7 @@ import { useDidUpdateEffect } from 'hooks';
 import { Container, Network, Title } from 'pages/styles';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import { getNetwork } from 'utils';
 import { useSdk } from '../../hooks';
 import {
   ButtonContainer,
@@ -249,6 +250,7 @@ const ConnectWallet: React.FC = () => {
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
+      <Network>Running on Kleverchain {getNetwork()}</Network>
       <Container>
         <Header>
           <Title>Access your Account</Title>
@@ -311,12 +313,6 @@ const ConnectWallet: React.FC = () => {
           {loading && <Loader />}
         </Content>
       </Container>
-      <Network>
-        Running on Kleverchain{' '}
-        {process.env.REACT_APP_DEFAULT_API_HOST?.includes('devnet')
-          ? 'Devnet'
-          : 'Testnet'}
-      </Network>
     </DragContainer>
   );
 };

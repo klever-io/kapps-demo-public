@@ -55,10 +55,18 @@ export const SectionTitle = styled.div`
   font-size: 1.2rem;
   width: calc(100% - 2rem);
   font-weight: 500;
+  display: flex;
   color: ${props => props.theme.white};
   position: absolute;
   top: 1rem;
   left: 1rem;
+`;
+
+export const TooltipSpace = styled.div`
+  margin-left: 0.4rem;
+  position: absolute;
+  left: 2rem;
+  bottom: 3rem;
 `;
 
 export const InputWrapper = styled.div``;

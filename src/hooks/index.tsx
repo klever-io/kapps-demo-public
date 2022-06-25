@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { useEffect, useRef, useState, createContext, useContext } from 'react';
-import { Account, core } from '@klever/sdk';
+import { Account } from '@klever/sdk';
 
 export const useDidUpdateEffect = (fn: Function, inputs: Array<any>): void => {
   const didMountRef = useRef(false);
@@ -25,7 +25,7 @@ const SdkProvider: React.FC = ({ children }) => {
   const [acc, setAcc] = useState<Account | null>(null);
 
   const values: ISdkContext = {
-    isLoaded: () => core.isSDKLoaded(),
+    isLoaded: async () => !!acc,
     getAccount: () => acc,
     setAccount: account => setAcc(account),
   };
