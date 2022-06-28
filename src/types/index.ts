@@ -106,6 +106,16 @@ export interface IMarketplace {
   referralPercentage?: number;
 }
 
+//Blocks
+
+export interface IBlock {
+  epoch: number;
+  timestamp: number;
+  txCount: number;
+  blockRewards: number;
+  stakingRewards: number;
+}
+
 // Requests ====================================================================
 
 export interface IResponse {

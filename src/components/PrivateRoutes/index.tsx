@@ -1,11 +1,12 @@
 import { Account } from '@klever/sdk';
 import { useSdk } from '../../hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router';
 
 const PrivateRoutes: React.FC = ({ children, ...rest }) => {
   const sdk = useSdk();
   const account = sdk.getAccount();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const walletAddress = sessionStorage.getItem('walletAddress');
@@ -13,23 +14,29 @@ const PrivateRoutes: React.FC = ({ children, ...rest }) => {
 
     if (!account && privateKey && walletAddress) {
       sdk.setAccount(new Account(walletAddress, privateKey));
+    } else {
+      setLoading(false);
     }
-  }, []);
+  }, [sdk.getAccount()]);
   return (
-    <Route
-      {...rest}
-      render={() =>
-        sessionStorage.getItem('walletAddress') ? (
-          <>{children}</>
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/connect',
-            }}
-          />
-        )
-      }
-    />
+    <>
+      {!loading && (
+        <Route
+          {...rest}
+          render={() =>
+            sessionStorage.getItem('walletAddress') ? (
+              <>{children}</>
+            ) : (
+              <Redirect
+                to={{
+                  pathname: '/connect',
+                }}
+              />
+            )
+          }
+        />
+      )}
+    </>
   );
 };
 
