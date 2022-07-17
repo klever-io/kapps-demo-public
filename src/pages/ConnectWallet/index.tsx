@@ -195,7 +195,7 @@ const ConnectWallet: React.FC = () => {
 
       setLoading(false);
 
-      if (!walletAddress.includes('klv')) {
+      if (!walletAddress.startsWith('klv')) {
         setError('Invalid Wallet Address.');
         setWalletAddress('');
         return;
