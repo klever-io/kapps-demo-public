@@ -55,7 +55,7 @@ const contents: IContent[] = [
       { name: 'Klever Finance', href: 'https://klever.finance/' },
       {
         name: 'WhitePaper',
-        href: 'https://klever.io/downloads/Klever_Whitepaper_v1.5.pdf',
+        href: 'https://bc.klever.finance/wp',
       },
     ],
   },

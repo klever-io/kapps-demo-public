@@ -17,6 +17,8 @@ import {
   FaucetIcon,
 } from './styles';
 
+import { getNetwork } from 'utils';
+
 const Wallet: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [reload, setReload] = useState(false);
@@ -88,11 +90,13 @@ const Wallet: React.FC = () => {
         {!reload && (
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Balance />
-            <FaucetIcon
-              size={23}
-              title="Request daily KLV"
-              onClick={() => handleRequestKLV()}
-            />
+            {getNetwork() !== 'Mainnet' && (
+              <FaucetIcon
+                size={23}
+                title="Request daily KLV"
+                onClick={() => handleRequestKLV()}
+              />
+            )}
           </div>
         )}
       </WalletHeader>
