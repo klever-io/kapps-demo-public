@@ -46,6 +46,7 @@ const Marketplaces = () => {
       response = await api.get({
         route: `transaction/list`,
         query: {
+          status: 'success',
           type: 20,
         },
       });
