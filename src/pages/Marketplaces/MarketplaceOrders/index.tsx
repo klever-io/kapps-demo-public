@@ -15,7 +15,7 @@ interface ISellOrderTransaction {
   receipts: any[];
   contract: {
     parameter: {
-      assetID: string;
+      assetId: string;
       currencyID: string;
       price: number;
       reservePrice: number;
@@ -92,9 +92,10 @@ const Marketplace = () => {
 
     const sellOrders = sellOrdersResponse.data.transactions.map(
       (transaction: ISellOrderTransaction) => {
+        console.log(transaction);
         return {
           owner: transaction.sender,
-          assetID: transaction.contract[0].parameter.assetID,
+          assetID: transaction.contract[0].parameter.assetId,
           currencyID: transaction.contract[0].parameter.currencyID,
           price: transaction.contract[0].parameter.price,
           reservePrice: transaction.contract[0].parameter.reservePrice,
@@ -126,7 +127,7 @@ const Marketplace = () => {
       );
       const sellOrder = sellOrders[sellOrderIndex];
 
-      if (sellOrder.marketType === 'BuyItNowMarket') {
+      if (sellOrder?.marketType === 'BuyItNowMarket') {
         if (sellOrderIndex !== -1) {
           sellOrders[sellOrderIndex] = {
             ...sellOrders[sellOrderIndex],
@@ -154,7 +155,7 @@ const Marketplace = () => {
   };
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [page]);
 
   const buttons = [
     {
@@ -188,7 +189,7 @@ const Marketplace = () => {
       <PaginationContainer>
         <Pagination
           count={totalPages}
-          page={page}
+          page={page ? page : 0}
           onPaginate={(page: any) => {
             setPage(page);
           }}

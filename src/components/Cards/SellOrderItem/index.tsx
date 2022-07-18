@@ -31,15 +31,28 @@ const SellOrderItem: React.FC<IMakretplaceItemProps> = ({
         </span>
         <span>{item.marketType}</span>
         {item.marketType === 'BuyItNowMarket' ? (
-          <span>
-            {' '}
-            {'Price: ' + item.price?.toLocaleString() + ' ' + item.currencyID}
-          </span>
+          <>
+            {item.price && (
+              <span>
+                {' '}
+                {'Price: ' +
+                  item.price?.toLocaleString() +
+                  ' ' +
+                  item.currencyID}
+              </span>
+            )}
+            {!item.price && <span> No price set</span>}
+          </>
         ) : (
-          <span>
-            {' '}
-            {'reservePrice: ' + item.reservePrice + ' ' + item.currencyID}
-          </span>
+          <>
+            {item.reservePrice && (
+              <span>
+                {' '}
+                {'reservePrice: ' + item.reservePrice + ' ' + item.currencyID}
+              </span>
+            )}{' '}
+            {!item.reservePrice && <span> No reserve price</span>}
+          </>
         )}
         {item.marketType === 'BuyItNowMarket' ? (
           item.sold && <span>Sold</span>

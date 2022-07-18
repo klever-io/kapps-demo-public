@@ -10,6 +10,14 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SdkProvider } from './hooks';
 
+//add window methods to global scope
+declare global {
+  interface Window {
+    decodePEM: any;
+    signTx: any;
+  }
+}
+
 const App: React.FC = () => (
   <ThemeProvider theme={dark}>
     <SdkProvider>

@@ -16,6 +16,7 @@ import { useSdk } from '../../../hooks';
 import { IAccountAsset, IAddressResponse } from 'types';
 import Loader from 'components/Loading/Loader';
 import Button from 'components/Button';
+import { getNetwork } from 'utils';
 
 interface IAsset {
   name: string;
@@ -102,9 +103,11 @@ const Asset: React.FC<IAssetsProps> = ({ reload }) => {
             Wallet address not initialized. Please make a transfer before
             procceeding
           </span>
-          <ButtonContainer>
-            <Button onClick={handleRequestKLV}>Request Test KLV</Button>
-          </ButtonContainer>
+          {getNetwork() !== 'Mainnet' && (
+            <ButtonContainer>
+              <Button onClick={handleRequestKLV}>Request Test KLV</Button>
+            </ButtonContainer>
+          )}
         </EmptyTab>
       )}
       {assets.length > 0 && (

@@ -1,6 +1,7 @@
 import { Account, core } from '@klever/sdk';
 import { Buffer } from 'buffer';
 import Button from 'components/Button';
+import Input from 'components/Input';
 import Loader from 'components/Loading/Loader';
 import Header from 'components/Pages/Header';
 import { useDidUpdateEffect } from 'hooks';
@@ -18,6 +19,9 @@ import {
   ErrorContainer,
   InfoIcon,
   InputFile,
+  PasswordInput,
+  PasswordLabel,
+  StyledInput,
 } from './styles';
 
 const ConnectWallet: React.FC = () => {
@@ -31,6 +35,10 @@ const ConnectWallet: React.FC = () => {
 
   const [isDragging, setDragging] = useState(false);
   const [draggingOverlayCount, setDragginOverlayCount] = useState(0);
+
+  const [isEncrypted, setIsEncrypted] = useState(false);
+
+  const [password, setPassword] = useState('');
 
   const [error, setError] = useState('');
 
@@ -64,16 +72,25 @@ const ConnectWallet: React.FC = () => {
     return contents[privateKeyPosition];
   };
 
-  const decodePrivateKey = (longPrivateKey: string): string => {
-    const decodedToBase64 = Buffer.from(longPrivateKey, 'base64');
-    const decodedToHex = Buffer.from(decodedToBase64.toString(), 'hex');
-    const privateKey = decodedToHex.slice(0, 32);
+  const decodePrivateKey = (
+    longPrivateKey: string,
+    contents: string,
+  ): string => {
+    let pk: string;
 
-    const encodedToHex = [...new Uint8Array(privateKey)]
-      .map(byte => byte.toString(16).padStart(2, '0'))
-      .join('');
+    if (isEncrypted) {
+      pk = window.decodePEM(contents, password);
+    } else {
+      const decodedToBase64 = Buffer.from(longPrivateKey, 'base64');
+      const decodedToHex = Buffer.from(decodedToBase64.toString(), 'hex');
+      const privateKey = decodedToHex.slice(0, 32);
 
-    return encodedToHex;
+      pk = [...new Uint8Array(privateKey)]
+        .map(byte => byte.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    return pk;
   };
 
   const encodePrivateKey = (privateKey: string): string => {
@@ -134,11 +151,12 @@ const ConnectWallet: React.FC = () => {
           return;
         }
 
-        setPrivateKey(decodePrivateKey(privateKey));
+        setPrivateKey(decodePrivateKey(privateKey, result));
         setWalletAddress(walletAddress);
         setLoading(true);
         if (error !== '') setError('');
       };
+
       reader.readAsText(file);
     }
   };
@@ -150,7 +168,6 @@ const ConnectWallet: React.FC = () => {
 
   const processFile = (event: any, isDrop: boolean) => {
     preventEvent(event);
-
     const files = isDrop ? event.dataTransfer.files : event.target.files;
 
     readFile(files);
@@ -182,15 +199,26 @@ const ConnectWallet: React.FC = () => {
   useDidUpdateEffect(() => {
     const validateAddress = async () => {
       if (walletAddress === '') {
-        setError('Invalid Wallet Address.');
-        return;
-      }
-      if (privateKey === '') {
-        setError('Invalid Private Key.');
+        if (error === '') {
+          setError('Invalid Wallet Address.');
+        }
+
+        setLoading(false);
         return;
       }
 
-      const account = new Account(walletAddress, privateKey);
+      if (privateKey === '') {
+        setError('Invalid Private Key.');
+        setLoading(false);
+        setWalletAddress('');
+        return;
+      }
+
+      const account = new Account(
+        walletAddress,
+        privateKey,
+        process.env.REACT_APP_DEFAULT_NODE_HOST ?? undefined,
+      );
       sdk.setAccount(account);
 
       setLoading(false);
@@ -198,12 +226,26 @@ const ConnectWallet: React.FC = () => {
       if (!walletAddress.includes('klv')) {
         setError('Invalid Wallet Address.');
         setWalletAddress('');
+        setLoading(false);
+        return;
+      }
+
+      const { signature } = await window.signTx(
+        JSON.stringify({
+          tx: {} as any,
+          privateKey: privateKey,
+        }),
+      );
+
+      if (signature === '') {
+        setError('Invalid Private Key and Password combination.');
+        setWalletAddress('');
+        setLoading(false);
         return;
       }
 
       sessionStorage.setItem('privateKey', privateKey);
       sessionStorage.setItem('walletAddress', walletAddress);
-
       history.push('/wallet');
     };
     validateAddress();
@@ -302,6 +344,33 @@ const ConnectWallet: React.FC = () => {
                     <span>{error}</span>
                   </ErrorContainer>
                 )}
+
+                <PasswordLabel>
+                  Password protected?
+                  <Input
+                    type="checkbox"
+                    onChange={() => {
+                      setIsEncrypted(!isEncrypted);
+                    }}
+                    key={String(isEncrypted)}
+                    checked={isEncrypted}
+                    title=""
+                  />
+                </PasswordLabel>
+                <PasswordInput>
+                  {isEncrypted && (
+                    <>
+                      <StyledInput
+                        type="password"
+                        onChange={(event: any) => {
+                          setPassword(event.target.value);
+                        }}
+                        value={password}
+                        title="Password"
+                      />
+                    </>
+                  )}
+                </PasswordInput>
               </ContentBody>
               <ButtonContainer>
                 <Button styleType="outlined" onClick={handleGeneratePEM}>
