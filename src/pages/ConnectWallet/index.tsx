@@ -79,7 +79,7 @@ const ConnectWallet: React.FC = () => {
     let pk: string;
 
     if (isEncrypted) {
-      pk = window.decodePEM(contents, password);
+      pk = window.kleverWeb.decodePEM(contents, password);
     } else {
       const decodedToBase64 = Buffer.from(longPrivateKey, 'base64');
       const decodedToHex = Buffer.from(decodedToBase64.toString(), 'hex');
@@ -230,7 +230,7 @@ const ConnectWallet: React.FC = () => {
         return;
       }
 
-      const { signature } = await window.signTx(
+      const { signature } = await window.kleverWeb.signTx(
         JSON.stringify({
           tx: {} as any,
           privateKey: privateKey,

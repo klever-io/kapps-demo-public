@@ -13,8 +13,10 @@ import { SdkProvider } from './hooks';
 //add window methods to global scope
 declare global {
   interface Window {
-    decodePEM: any;
-    signTx: any;
+    kleverWeb: {
+      decodePEM: any;
+      signTx: any;
+    };
   }
 }
 
